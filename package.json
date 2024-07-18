@@ -1,0 +1,17 @@
+{
+  "name": "ligatbetplay",
+  "version": "1.0.0",
+  "description": "La Liga BetPlay es la liga de fútbol profesional de Colombia, que requiere un sistema de gestión integral para administrar todos los aspectos relacionados con la liga, desde la gestión de equipos y jugadores hasta la programación de partidos y la interacción con los aficionados. Actualmente, la gestión de la liga se realiza manualmente o con múltiples sistemas no integrados, lo que genera ineficiencias, errores y dificultades en la toma de decisiones.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongo": "^0.1.0",
+    "mongoose": "^8.5.1"
+  }
+}
