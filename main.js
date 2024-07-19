@@ -1,6 +1,6 @@
 
-import {partido} from "./js/modules/partido.js";
+import {comunicacion} from "./js/modules/comunicacion.js";
 
-let partidos = new partido()
+let doy = new comunicacion()
 
-console.log(await partidos.getAllMatch());
+console.log(await doy.getAllMatch());

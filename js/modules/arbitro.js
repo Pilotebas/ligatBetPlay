@@ -1,14 +1,14 @@
 import { connect } from "../../helpers/db/connect.js";
 
-export class partido extends connect {
+export class arbitro extends connect {
     static instance
     constructor() {
-        if (typeof partido.instance === "object"){
-            return partido.instance
+        if (typeof arbitro.instance === "object"){
+            return arbitro.instance
         }
         super();
-        this.collecction = this.db.collection("partidos");
-        partido.instance = this;
+        this.collecction = this.db.collection("arbitros");
+        arbitro.instance = this;
         return this;
     }
 
