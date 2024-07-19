@@ -5,13 +5,14 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch main.js"
+    "dev": "node --watch --env-file=.env main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mongo": "^0.1.0",
+    "mongodb": "^6.8.0",
     "mongoose": "^8.5.1"
   }
 }

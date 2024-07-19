@@ -8,21 +8,17 @@ export class connect {
     #host;
     #cluster;
     #dbName
-    constructor(
-        {user : u, port : p, pass: w, host: h, cluster: c, dbName: d} = 
-        {
-            user: '', port: '', pass: '', host: '', cluster: "", dbName: ''
-        }
-        ) {
+    constructor() {
         if(typeof connect.instance === 'object'){
             return connect.instance;
         }
-        this.user = u
-        this.port = p
-        this.setPass = w
-        this.setHost = h
-        this.setCluster = c
-        this.setDbName = d
+      
+        this.user = process.env.user
+        this.port = process.env.port
+        this.setPass = process.env.pass
+        this.setHost = process.env.host
+        this.setCluster = process.env.cluster
+        this.setDbName = process.env.dbName
         this.#open();
         this.db = this.conexion.db(this.getDbName);
         connect.instance = this;

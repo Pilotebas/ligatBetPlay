@@ -1,13 +1,6 @@
-import { actividad } from "./js/modules/actividad";
 
-let conexion= {
-    user: hola,
-    port: Juan,
-    pass: 1023,
-    host: 123,
-    cluster: serveo,
-    dbName: hola
-}
-let hola = new actividad(conexion)
+import {partido} from "./js/modules/partido.js";
 
-console.log(hola);
+let partidos = new partido()
+
+console.log(await partidos.getAllMatch());
