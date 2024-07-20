@@ -40,7 +40,7 @@ El sistema de gestión propuesto debe abordar las siguientes necesidades:
   - `fecha`: Fecha del entrenamiento.
   - `hora`: Hora del entrenamiento.
   - `lugar`: Lugar donde se realiza el entrenamiento.
-  - `actividades`: Lista de actividades realizadas durante el entrenamiento.
+  - `actividades`: Lista de idActividades realizadas durante el entrenamiento.
   - `jugadoresConvocados`: Lista de jugadores convocados para el entrenamiento.
 
 

@@ -12,7 +12,7 @@ export class connect {
         if(typeof connect.instance === 'object'){
             return connect.instance;
         }
-      
+
         this.user = process.env.user
         this.port = process.env.port
         this.setPass = process.env.pass
@@ -20,7 +20,6 @@ export class connect {
         this.setCluster = process.env.cluster
         this.setDbName = process.env.dbName
         this.#open();
-        this.db = this.conexion.db(this.getDbName);
         connect.instance = this;
         return this
     }
@@ -49,13 +48,6 @@ export class connect {
         return this.#dbName
     }
     async #open () {
-        this.conexion = new MongoClient(`${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}`)
-        this.conexion.connect();
-    }
-    async reconnect(){
-        await this.#open();
-    }
-    async close(){
-        await this.conexion.close();
+        this.conexion = new MongoClient(`${this.getHost}${this.user}:${this.getPass}@${this.getCluster}:${this.port}/${this.getDbName}`)
     }
 }

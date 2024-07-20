@@ -1,6 +1,6 @@
 import { connect } from "../../helpers/db/connect.js";
 
-export class afficionado extends connect {
+export class aficionado extends connect {
     static instance
     constructor() {
         if (typeof afficionado.instance === "object"){
