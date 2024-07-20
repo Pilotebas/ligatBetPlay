@@ -1,6 +1,6 @@
 
-import {aficionado} from "./js/modules/aficionado.js";
+import {partido} from "./js/modules/partido.js";
 
-let doy = new aficionado()
+let doy = new partido()
 
-console.log(await doy.getAllMatch());
+console.log(await doy.validacion());
