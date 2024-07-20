@@ -1,20 +1,19 @@
 import { connect } from "../../helpers/db/connect.js";
 
-export class afficionado extends connect {
+export class aficionado extends connect {
     static instance
     constructor() {
-        if (typeof afficionado.instance === "object"){
-            return afficionado.instance
+        if (typeof aficionado.instance === "object"){
+            return aficionado.instance
         }
         super();
-        this.collecction = this.db.collection("aficcionados");
-        afficionado.instance = this;
+        this.collecction = this.db.collection("aficionados");
+        aficionado.instance = this;
         return this;
     }
 
     async getAllMatch() {
         let activities  = await this.collecction.find({}).toArray()
-        this.conexion.close()
         return activities
     }
 }

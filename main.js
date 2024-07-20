@@ -1,6 +1,6 @@
 
-import {comunicacion} from "./js/modules/comunicacion.js";
+import {aficionado} from "./js/modules/aficionado.js";
 
-let doy = new comunicacion()
+let doy = new aficionado()
 
 console.log(await doy.getAllMatch());
