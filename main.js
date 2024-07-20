@@ -1,12 +1,13 @@
 
 import {equipo} from "./js/modules/equipo.js";
 import { ObjectId } from "mongodb";
+import { jugador } from "./js/modules/jugador.js";
 
 
 // Caso 1
 
 //const equipos = new equipo()
-// const datosAñadir = {
+// const datosAñadirEquipo = {
 //     nombre: 'Equipo A',
 //     ciudad: 'Ciudad A',
 //     estadio: new ObjectId('669bd1360fdab186cea16d4b'),
@@ -19,9 +20,24 @@ import { ObjectId } from "mongodb";
 //       new ObjectId('669bd2b20fdab186cea16d57')
 //     ]
 // }
-// console.log(await equipos.addTeam(datosAñadir));
+// console.log(await equipos.addTeam(datosAñadirEquipo));
 
 // const datosActualizar = {nombre: 'Equipo A'}
 // console.log(await equipos.updateTeam('669bd7b50fdab186cea16d78', datosActualizar));
 
 //console.log(await equipos.deleteTeam('669c03f6bec389f8b97a36c6'));
+
+// caso 2
+const jugadores = new jugador()
+const datosAñadirJugador = {
+  nombre: 'juan Rivas',
+  edad: 12,
+  posicion: "portero",
+  nacionalidad: "mexicano",
+  numeroCamiseta: 100,
+  equipo: new ObjectId('669bd7b50fdab186cea16d78'),  // Lista vacía para partidos
+  lesiones: [],  // Lista vacía para entrenamientos
+  rendimientos: []
+}
+
+console.log(await jugadores.addPlayer(datosAñadirJugador));
