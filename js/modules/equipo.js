@@ -133,6 +133,27 @@ export class equipo extends connect {
         }
 
     }
-  
+    async deleteTeam(teamId){
+        try {
+            this.conexion.connect();
+
+            const result = this.collection.findOneAndDelete({_id: new ObjectId(teamId)})
+
+            if (result.modifiedCount === 0) {
+                return { error: "Equipo no encontrado" };
+            }
+
+            return {
+                success: true,
+                message: 'Equipo eliminado correctamente'
+            };
+        } catch (error) {
+            return {
+                success: true,
+                error: error_type || 'Error',
+                error_message : error_message || 'Error'
+            };
+        }
+    }
         
 }

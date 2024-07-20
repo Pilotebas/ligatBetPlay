@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 
 // Caso 1
 
-// const equipos = new equipo()
+//const equipos = new equipo()
 // const datosAñadir = {
 //     nombre: 'Equipo A',
 //     ciudad: 'Ciudad A',
@@ -24,4 +24,4 @@ import { ObjectId } from "mongodb";
 // const datosActualizar = {nombre: 'Equipo A'}
 // console.log(await equipos.updateTeam('669bd7b50fdab186cea16d78', datosActualizar));
 
-
+//console.log(await equipos.deleteTeam('669c03f6bec389f8b97a36c6'));
