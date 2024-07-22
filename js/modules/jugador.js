@@ -113,7 +113,6 @@ export class jugador extends connect {
     }
     async deletePlayer(teamId){
         try {
-            this.conexion.connect();
 
             const result = this.collection.findOneAndDelete({_id: new ObjectId(teamId)})
 
@@ -127,9 +126,8 @@ export class jugador extends connect {
             };
         } catch (error) {
             return {
-                success: true,
-                error: error_type || 'Error',
-                error_message : error_message || 'Error'
+                success: false,
+                error_message: "jugador no encontrado" 
             };
         }
     }

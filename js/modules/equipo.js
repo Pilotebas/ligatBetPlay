@@ -66,7 +66,6 @@ export class equipo extends connect {
             this.conexion.connect();
             const arrayFilters = [];
             const updateFields = {};
-
             // Verificar si cada campo está presente y agregar al objeto de actualización
             if (nombre) updateFields.nombre = nombre;
             if (ciudad) updateFields.ciudad = ciudad;
@@ -135,23 +134,24 @@ export class equipo extends connect {
     }
     async deleteTeam(teamId){
         try {
-            this.conexion.connect();
-
-            const result = this.collection.findOneAndDelete({_id: new ObjectId(teamId)})
+            if(!teamExist) return { error : "Equipo no existe"} 
+            const result = await this.collection.findOneAndDelete({_id: new ObjectId(teamId)})
+            console.log(result);
 
             if (result.modifiedCount === 0) {
-                return { error: "Equipo no encontrado" };
+                return { 
+                    error: "Equipo no encontrado",
+                 };
             }
-
+            
             return {
                 success: true,
                 message: 'Equipo eliminado correctamente'
             };
         } catch (error) {
             return {
-                success: true,
-                error: error_type || 'Error',
-                error_message : error_message || 'Error'
+                success: false,
+                error_message : 'Equipo no encontrado'
             };
         }
     }
