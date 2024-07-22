@@ -110,4 +110,23 @@ export class partido extends connect {
         })
         return res
     }
+
+    async eliminarPartido(){
+        const objEliminar = {
+            id: new ObjectId("669ecb5f5e2119f338879a38")
+        }
+        let {id} = objEliminar
+
+        const partidoExist = await this.collection.findOne({_id : id})
+        if(!partidoExist){
+            return { error : "El partido no existe"}
+        }
+
+        let res = await this.collection.deleteOne(
+            { _id: id }
+        );
+        if(res.acknowledged){
+            return {descripcion: "Objeto eliminado con exito"}
+        }
+    }
 }
