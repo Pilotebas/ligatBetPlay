@@ -65,28 +65,28 @@ const datosAñadirResultado = {
   ],
   resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
 };
-console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
+//console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
 
 const datosAEditarResultado = {
   goles: [
-      { id: '64d4f141e6450d1a8c26b562', jugadorGol: '64d4f141e6450d1a8c26b564', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: new ObjectId('669bd7b50fdab186cea16d7c'), minuto: 25 },
-      { id: '64d4f141e6450d1a8c26b565', jugadorGol: '64d4f141e6450d1a8c26b567', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: new ObjectId('669bd7b50fdab186cea16d7d'), minuto: 50 }
+      { id: '64d4f141e6450d1a8c26b562', jugadorGol: '669bd1b40fdab186cea16d51', jugadorAsistencia: '669bd1b40fdab186cea16d51', equipo: new ObjectId('669bd7b50fdab186cea16d7c'), minuto: 25 },
+      { id: '64d4f141e6450d1a8c26b565', jugadorGol: '669bd1b40fdab186cea16d52', jugadorAsistencia: '669bd1b40fdab186cea16d52', equipo: new ObjectId('669bd7b50fdab186cea16d7d'), minuto: 50 }
   ],
   tarjetas: [
-      { id: '64d4f141e6450d1a8c26b568', jugador: '64d4f141e6450d1a8c26b564', tipo: 'amarilla', minuto: 15 },
-      { id: '64d4f141e6450d1a8c26b569', jugador: '64d4f141e6450d1a8c26b567', tipo: 'roja', minuto: 80 }
+      { id: '669eb844491f4e4ba3253145', jugador: '669bd1b40fdab186cea16d51', tipo: 'amarilla', minuto: 15 },
+      { id: '669eb844491f4e4ba3253144', jugador: '669bd1b40fdab186cea16d51', tipo: 'roja', minuto: 82 }
   ],
   incidentes: [
       { 
-          id: '64d4f141e6450d1a8c26b56a', 
-          idJugador: '64d4f141e6450d1a8c26b564', 
+          id: '669eb844491f4e4ba3253147', 
+          idJugador: '669bd1b40fdab186cea16d51', 
           tipo: 'Falta grave', 
           sancion: 'Tarjeta roja directa', 
-          minuto: 80, 
-          descripcion: 'El jugador cometió una entrada peligrosa.' 
+          minuto: 82,
+          descripcion: 'El jugador cometió una entrada peligrosa.'
       }
   ],
-  resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
+  resultado: { golesEquipoLocal: 5, golesEquipoVisitante: 1 }
 };
 
-//console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
+console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));

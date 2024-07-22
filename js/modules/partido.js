@@ -78,12 +78,10 @@ export class partido extends connect {
     
             // Actualizar el resultado del partido
             const updateFields = { goles, tarjetas, incidentes, resultado };
-            console.log(updateFields);
             const result = await this.collection.updateOne(
                 { _id: new ObjectId(partidoId) },
                 { $set: updateFields }
             );
-            console.log("ajajaja", result);
             if (result.modifiedCount === 0) {
                 return {
                     success: false,
@@ -178,12 +176,12 @@ export class partido extends connect {
             if (resultado) {
                 updateFields.resultado = resultado;
             }
-    
+            console.log(updateFields);
             const result = await this.collection.updateOne(
                 { _id: partidoId },
                 { $set: updateFields }
             );
-    
+            
             if (result.modifiedCount === 0) {
                 return { error: "No se realizaron cambios en el partido" };
             }
