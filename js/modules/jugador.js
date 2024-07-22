@@ -65,7 +65,7 @@ export class jugador extends connect {
             }
 
     } 
-    async updateTeam(teamId, { nombre, ciudad, estadio, entrenador, jugadores, partidos, entrenamientos, patrocinadores }) {
+    async updatePlayer(teamId, { nombre, ciudad, estadio, entrenador, jugadores, partidos, entrenamientos, patrocinadores }) {
         try {
             this.conexion.connect();
             const arrayFilters = [];
@@ -137,7 +137,7 @@ export class jugador extends connect {
         }
 
     }
-    async deleteTeam(teamId){
+    async deletePlayer(teamId){
         try {
             this.conexion.connect();
 
