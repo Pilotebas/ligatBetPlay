@@ -43,7 +43,7 @@ import { partido } from "./js/modules/partido.js";
 
 //console.log(await jugadores.addPlayer(datosAñadirJugador));
 
-// caso 3 
+// caso 4 
 const partidos = new partido();
 const datosAñadirResultado = {
   goles: [
@@ -65,6 +65,28 @@ const datosAñadirResultado = {
   ],
   resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
 };
+// console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
 
+const datosAEditarResultado = {
+  goles: [
+      { id: '64d4f141e6450d1a8c26b562', jugadorGol: '64d4f141e6450d1a8c26b564', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: 'local', minuto: 25 },
+      { id: '64d4f141e6450d1a8c26b565', jugadorGol: '64d4f141e6450d1a8c26b567', jugadorAsistencia: null, equipo: 'visitante', minuto: 50 }
+  ],
+  tarjetas: [
+      { id: '64d4f141e6450d1a8c26b568', jugador: '64d4f141e6450d1a8c26b564', tipo: 'amarilla', minuto: 15 },
+      { id: '64d4f141e6450d1a8c26b569', jugador: '64d4f141e6450d1a8c26b567', tipo: 'roja', minuto: 80 }
+  ],
+  incidentes: [
+      { 
+          id: '64d4f141e6450d1a8c26b56a', 
+          idJugador: '64d4f141e6450d1a8c26b564', 
+          tipo: 'Falta grave', 
+          sancion: 'Tarjeta roja directa', 
+          minuto: 80, 
+          descripcion: 'El jugador cometió una entrada peligrosa.' 
+      }
+  ],
+  resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
+};
 
-console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
+console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
