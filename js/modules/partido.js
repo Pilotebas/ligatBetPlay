@@ -35,6 +35,7 @@ export class partido extends connect {
             // Validar y convertir IDs en goles
             for (const gol of goles) {
                 gol.id = new ObjectId();
+                gol.jugadorAsistencia = new ObjectId(gol.jugadorAsistencia)
                 gol.jugadorGol = new ObjectId(gol.jugadorGol);
                 if (gol.jugadorAsistencia) {
                     gol.jugadorAsistencia = new ObjectId(gol.jugadorAsistencia);
@@ -77,7 +78,7 @@ export class partido extends connect {
     
             // Actualizar el resultado del partido
             const updateFields = { goles, tarjetas, incidentes, resultado };
-            
+            console.log(updateFields);
             const result = await this.collection.updateOne(
                 { _id: new ObjectId(partidoId) },
                 { $set: updateFields }

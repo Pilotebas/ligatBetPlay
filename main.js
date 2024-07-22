@@ -47,8 +47,8 @@ import { partido } from "./js/modules/partido.js";
 const partidos = new partido();
 const datosAñadirResultado = {
   goles: [
-      {  jugadorGol: '669bd1b40fdab186cea16d51', jugadorAsistencia: '669bd1b40fdab186cea16d51', equipo: 'local', minuto: 25 },
-      {  jugadorGol: '669bd1b40fdab186cea16d52', jugadorAsistencia: null, equipo: 'visitante', minuto: 50 }
+      {  jugadorGol: '669bd1b40fdab186cea16d51', jugadorAsistencia: '669bd1b40fdab186cea16d51', equipo: new ObjectId('669bd7b50fdab186cea16d7c'), minuto: 25 },
+      {  jugadorGol: '669bd1b40fdab186cea16d52', jugadorAsistencia: '669bd1b40fdab186cea16d52', equipo: new ObjectId('669bd7b50fdab186cea16d7d'), minuto: 50 }
   ],
   tarjetas: [
       {  jugador: '669bd1b40fdab186cea16d52', tipo: 'amarilla', minuto: 15 },
@@ -65,12 +65,12 @@ const datosAñadirResultado = {
   ],
   resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
 };
-// console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
+console.log(await partidos.addResultado('669beaad0fdab186cea16d90', datosAñadirResultado));
 
 const datosAEditarResultado = {
   goles: [
-      { id: '64d4f141e6450d1a8c26b562', jugadorGol: '64d4f141e6450d1a8c26b564', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: 'local', minuto: 25 },
-      { id: '64d4f141e6450d1a8c26b565', jugadorGol: '64d4f141e6450d1a8c26b567', jugadorAsistencia: null, equipo: 'visitante', minuto: 50 }
+      { id: '64d4f141e6450d1a8c26b562', jugadorGol: '64d4f141e6450d1a8c26b564', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: new ObjectId('669bd7b50fdab186cea16d7c'), minuto: 25 },
+      { id: '64d4f141e6450d1a8c26b565', jugadorGol: '64d4f141e6450d1a8c26b567', jugadorAsistencia: '64d4f141e6450d1a8c26b563', equipo: new ObjectId('669bd7b50fdab186cea16d7d'), minuto: 50 }
   ],
   tarjetas: [
       { id: '64d4f141e6450d1a8c26b568', jugador: '64d4f141e6450d1a8c26b564', tipo: 'amarilla', minuto: 15 },
@@ -89,4 +89,4 @@ const datosAEditarResultado = {
   resultado: { golesEquipoLocal: 1, golesEquipoVisitante: 1 }
 };
 
-console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
+//console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
