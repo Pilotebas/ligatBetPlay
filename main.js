@@ -28,8 +28,8 @@ import { partido } from "./js/modules/partido.js";
 
 //console.log(await equipos.deleteTeam('669c03f6bec389f8b97a36c6'));
 
-// caso 2
-//const jugadores = new jugador()
+// CASO 2
+const jugadores = new jugador()
 //const datosAñadirJugador = {
  // nombre: 'juan Rivas',
  // edad: 12,
@@ -40,11 +40,24 @@ import { partido } from "./js/modules/partido.js";
   // lesiones: [],  // Lista vacía para entrenamientos
   // rendimientos: []
 //}
+//console.log(await jugadores.addPlayer(datosAñadirJugador));}
 
-//console.log(await jugadores.addPlayer(datosAñadirJugador));
 
-// caso 4 
-const partidos = new partido();
+const datosActualizarJugador = {
+ nombre: 'juan Rivas',
+ edad: 12,
+  posicion: "portero",
+  nacionalidad: "mexicano",
+  numeroCamiseta: 90,
+  equipo: new ObjectId('669bd7b50fdab186cea16d78'),  // Lista vacía para partidos
+  lesiones: [],  // Lista vacía para entrenamientos
+  rendimientos: []
+}
+console.log(await jugadores.updatePlayer('669c14507f532162e6cabd84', datosActualizarJugador));
+
+
+// CASO 4
+const partidos = new partido(); 
 const datosAñadirResultado = {
   goles: [
       {  jugadorGol: '669bd1b40fdab186cea16d51', jugadorAsistencia: '669bd1b40fdab186cea16d51', equipo: new ObjectId('669bd7b50fdab186cea16d7c'), minuto: 25 },
@@ -88,5 +101,4 @@ const datosAEditarResultado = {
   ],
   resultado: { golesEquipoLocal: 5, golesEquipoVisitante: 1 }
 };
-
-console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
+//console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));

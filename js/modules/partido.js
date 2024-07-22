@@ -20,6 +20,7 @@ export class partido extends connect {
         return activities
     }
 
+    // CASO 4 
     async addResultado(partidoId, { goles, tarjetas, incidentes, resultado }) {
         try {
     

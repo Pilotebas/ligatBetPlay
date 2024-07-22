@@ -20,6 +20,7 @@ export class jugador extends connect {
         return activities
     }
     
+    // CASO 2
     async addPlayer({nombre,edad,posicion,nacionalidad,numeroCamiseta,equipo,lesiones,rendimientos}) { 
         try {
             this.conexion.connect();
@@ -65,7 +66,7 @@ export class jugador extends connect {
             }
 
     } 
-    async updatePlayer(teamId, { nombre, ciudad, estadio, entrenador, jugadores, partidos, entrenamientos, patrocinadores }) {
+    async updatePlayer(teamId, { nombre, edad, posicion, nacionalidad, numeroCamiseta, equipo }) {
         try {
             this.conexion.connect();
             const arrayFilters = [];
@@ -73,45 +74,18 @@ export class jugador extends connect {
 
             // Verificar si cada campo está presente y agregar al objeto de actualización
             if (nombre) updateFields.nombre = nombre;
-            if (ciudad) updateFields.ciudad = ciudad;
-            if (estadio) {
-                const estadioExist = await this.db.collection('estadios').findOne({ _id: estadio });
-                if (!estadioExist) {
-                    return { error: "Estadio no existe" };
+            if (edad) updateFields.edad = edad;
+            if (posicion) updateFields.posicion = posicion;
+            if (nacionalidad) updateFields.nacionalidad = nacionalidad;
+            if (numeroCamiseta) updateFields.numeroCamiseta = numeroCamiseta;
+            if (equipo) {
+                const equipoExist = await this.db.collection('equipos').findOne({ _id: equipo });
+                if (!equipoExist) {
+                    return { error: "Equipo no existe" };
                 }
-                updateFields.estadio = estadio;
-            }
-            if (entrenador) {
-                const entrenadorExist = await this.db.collection('entrenadores').findOne({ _id: entrenador });
-                if (!entrenadorExist) {
-                    return { error: "Entrenador no existe" };
-                }
-                updateFields.entrenador = entrenador;
-            }
-            if (jugadores && jugadores.length > 0) {
-                const jugadorId = jugadores[0]; // Asumiendo que solo se envía un ID de jugador
-                updateFields["jugadores.$[elem]"] = jugadorId;
-                arrayFilters.push({ "elem._id": jugadorId });
-            }
-            if (partidos && partidos.length > 0) {
-                const partidoId = partidos[0]; // Asumiendo que solo se envía un ID de partido
-                updateFields["partidos.$[elem]"] = partidoId;
-                arrayFilters.push({ "elem._id": partidoId });
-            }
-            if (patrocinadores && patrocinadores.length > 0) {
-                const patrocinadorId = patrocinadores[0];
-                updateFields["patrocinadores.$[elem]"] = patrocinadorId;
-                arrayFilters.push({ "elem._id": patrocinadorId });
+                updateFields.equipo = equipo;
             }
 
-            // Actualización de campos en el objeto entrenamientos
-            if (entrenamientos) {
-                for (const [key, value] of Object.entries(entrenamientos)) {
-                    if (value) { // Solo actualizar si el valor no está vacío
-                        updateFields[`entrenamientos.${key}`] = value;
-                    }
-                }
-            }
             const result = await this.collection.findOneAndUpdate(
                 { _id: new ObjectId(teamId) },
                 { $set: updateFields },
