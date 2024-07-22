@@ -1,20 +1,22 @@
 import { connect } from "../../helpers/db/connect.js";
+import { ObjectId } from "mongodb"; 
 
 export class equipo extends connect {
-    static instance
+    static instance;
     constructor() {
-        if (typeof equipo.instance === "object"){
-            return equipo.instance
+        if (typeof equipo.instance === "object") {
+            return equipo.instance;
         }
         super();
-        this.collecction = this.db.collection("equipos");
+        this.db = this.conexion.db(this.getDbName);
+        this.collection = this.db.collection("equipos");
         equipo.instance = this;
         return this;
     }
 
     async getAll() {
-        let activities  = await this.collecction.find({}).toArray()
-        this.conexion.close()
-        return activities
+        let activities = await this.collection.find({}).toArray();
+        return activities;
     }
+
 }

@@ -20,7 +20,6 @@ export class connect {
         this.setCluster = process.env.cluster
         this.setDbName = process.env.dbName
         this.#open();
-        this.db = this.conexion.db(this.getDbName);
         connect.instance = this;
         return this
     }

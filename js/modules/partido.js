@@ -9,6 +9,7 @@ export class partido extends connect {
             return partido.instance
         }
         super();
+        this.db = this.conexion.db(this.getDbName);
         this.collection = this.db.collection("partidos");
         partido.instance = this;
         return this;
@@ -19,36 +20,94 @@ export class partido extends connect {
         return activities
     }
 
-    validacion(){
+    objetoc3(){
         const obj = {
-            equipoLocal: new ObjectId("669bd7b50fdab186cea16d78"),
-            equipoVisitante: new ObjectId("669bd7b50fdab186cea16d79"),
-            fecha: new Date("2024-08-01"),
+            equipoLocal: new ObjectId("669bd7b50fdab186cea16d79"),
+            equipoVisitante: new ObjectId("669bd7b50fdab186cea16d78"),
+            fecha: new Date("2024-08-30"),
             hora: "16:00",
-            estadio: new ObjectId("669bd1360fdab186cea16d42")
+            estadio: new ObjectId("669bd1360fdab186cea16d42"),
+            arbitro: new ObjectId("669adc5ff75237d05bf6a9d3")
         }
-        let {equipoLocal, equipoVisitante, fecha, hora, estadio} = obj
-        return (this.registrarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio))
+        let {equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro} = obj
+        return (this.validacionPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro))
     }
 
-    async registrarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio){
+    async validacionPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro){
+
+        const estadioExist = await this.db.collection('estadios').findOne({_id : estadio})
+        if(!estadioExist){
+            return { error : "El estadio no existe"}
+        }
+
+        const equipoLocalExist = await this.db.collection('equipos').findOne({_id : equipoLocal})
+        if(!equipoLocalExist){
+            return { error : "El equipo local no existe"}
+        }
+        const equipoVisExist = await this.db.collection('equipos').findOne({_id : equipoVisitante})
+        if(!equipoVisExist){
+            return { error : "El equipo visitante no existe"}
+        }
+
+        if(equipoLocal.toString() === equipoVisitante.toString()){
+            return {error: "Los equipos no pueden ser los mismos"}
+        }
         let res = await this.collection.aggregate([
             {
               $project: {
                 _id: 0,
                 hora: 1,
                 fecha: 1,
-                estadio: 1
+                estadio: 1,
+                equipoLocal: 1,
+                equipoVisitante: 1,
+                arbitro: 1
               }
             }
           ]).toArray()
-        console.log(res);
         for (let i = 0; i < res.length; i++) {
             if(res[i].estadio.toString() === estadio.toString() && res[i].fecha.getTime() === fecha.getTime()){
                 return {
-                    descripcion: "La fecha y el estadio coinciden con otro partido previamente asignado"
+                    error: "La fecha y el estadio coinciden con otro partido previamente asignado"
                 }
             }
         }
+
+        for (let i = 0; i < res.length; i++) {
+            if((res[i].equipoLocal.toString() === equipoLocal.toString() || res[i].equipoVisitante.toString() === equipoLocal.toString()) && res[i].fecha.getTime() === fecha.getTime()){
+                return{
+                    error: "El equipo local ya tiene asigando otro partido en la misma fecha"
+                }
+            }
+            if((res[i].equipoLocal.toString() === equipoVisitante.toString() || res[i].equipoVisitante.toString() === equipoVisitante.toString()) && res[i].fecha.getTime() === fecha.getTime()){
+                return{
+                    error: "El equipo visitante ya tiene asigando otro partido en la misma fecha"
+                }
+            }
+            if(res[i].arbitro.toString() === arbitro.toString() && res[i].fecha.getTime() === fecha.getTime()){
+                console.log(res[i].arbitro);
+                return {error: "El arbitro ya esta asignado a otro partido en esa fecha"}
+            }
+        }
+        return(this.programarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro))
+    }
+
+    async programarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro){
+        let res = await this.collection.insertOne({
+            equipoLocal: equipoLocal,
+            equipoVisitante: equipoVisitante,
+            fecha: fecha,
+            hora: hora,
+            estadio: estadio,
+            goles: [],
+            tarjetas: [],
+            incidentes: [],
+            resultado: {
+                golesEquipoLocal: 0,
+                golesEquipoVisitante: 0
+            },
+            arbitro: arbitro
+        })
+        return res
     }
 }
