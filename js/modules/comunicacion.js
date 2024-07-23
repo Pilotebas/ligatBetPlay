@@ -9,7 +9,7 @@ export class comunicacion extends connect {
         }
         super();
         this.db = this.conexion.db(this.getDbName);
-        this.collecction = this.db.collection("comunicaciones");
+        this.collection = this.db.collection("comunicaciones");
         comunicacion.instance = this;
         return this;
     }
@@ -35,7 +35,7 @@ export class comunicacion extends connect {
                 destinatarios: destinatarios.map(id => new ObjectId(id)), // Convertir todos los IDs a ObjectId
                 fechaPublicacion: new Date()
             };
-            console.log(newNotificacion);
+
             await this.collection.insertOne(newNotificacion);
             return {
                 success: true,
@@ -51,7 +51,7 @@ export class comunicacion extends connect {
         }
     }
 
-    async updateNotificacion(notificacionId, { titulo, mensaje, destinatarios }) {
+    async updateNotificacion(notificacionId, { titulo, contenido, destinatarios }) {
         try {
             this.conexion.connect();
             const updateFields = {};
@@ -62,7 +62,9 @@ export class comunicacion extends connect {
                     const destinatario = new ObjectId(destinatarioId);
                     const jugadorExist = await this.db.collection('jugadores').findOne({ _id: destinatario });
                     const equipoExist = await this.db.collection('equipos').findOne({ _id: destinatario });
-                    if (!jugadorExist && !equipoExist) {
+                    const entrenadorExist = await this.db.collection('entrenadores').findOne({ _id: destinatario });
+                    const arbitroExist = await this.db.collection('arbitros').findOne({ _id: destinatario });
+                    if (!jugadorExist && !entrenadorExist && !equipoExist && !arbitroExist) {
                         return { error: `Destinatario con ID ${destinatarioId} no encontrado (ni jugador ni equipo)` };
                     }
                 }
@@ -70,7 +72,7 @@ export class comunicacion extends connect {
             }
 
             if (titulo) updateFields.titulo = titulo;
-            if (mensaje) updateFields.mensaje = mensaje;
+            if (contenido) updateFields.contenido = contenido;
 
             const result = await this.collection.updateOne(
                 { _id: new ObjectId(notificacionId) },
@@ -83,7 +85,8 @@ export class comunicacion extends connect {
 
             return {
                 success: true,
-                message: 'Notificación actualizada correctamente'
+                message: 'Notificación actualizada correctamente',
+                data: updateFields
             };
         } catch (error) {
             return {

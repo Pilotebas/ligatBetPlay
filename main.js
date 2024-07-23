@@ -108,7 +108,7 @@ import { comunicacion } from "./js/modules/comunicacion.js";
 // CASO 6
 
 const comunicaciones = new comunicacion()
-const datosAñadir = {
+const datosAñadirComunicacion = {
     titulo : "HJAJKAA",
     contenido : "JAJAA",
     fechaPublicacion: new Date('2024-07-01'),
@@ -116,4 +116,11 @@ const datosAñadir = {
 
 }
 
-console.log(await comunicaciones.addNotificacion(datosAñadir));
+//console.log(await comunicaciones.addNotificacion(datosAñadirComunicacion));
+
+const datosActualizarComunicacion = {
+  titulo : "Rivas lo mama",
+  contenido: "Rivas lo mamax2"
+}
+
+console.log(await comunicaciones.updateNotificacion('66a0060b37d33b0d18d50607', datosActualizarComunicacion));
