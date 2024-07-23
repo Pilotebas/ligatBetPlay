@@ -5,5 +5,6 @@ import { jugador } from "./js/modules/jugador.js";
 
 let doy = new partido()
 
-console.log(await doy.objetoc3());
-console.log(await doy.eliminarPartido());
+//console.log(await doy.objetoc3());
+//console.log(await doy.eliminarPartido());
+console.log(await doy.editarPartido());
