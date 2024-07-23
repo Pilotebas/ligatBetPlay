@@ -1,7 +1,6 @@
 
 import {comunicacion} from "./js/modules/comunicacion.js";
 
-let doy = new comunicacion()
 
 //Caso 1
 
@@ -27,7 +26,7 @@ let doy = new comunicacion()
 // console.log(await equipos.deleteTeam(''));
 
 // CASO 2
-const jugadores = new jugador()
+//const jugadores = new jugador()
 //const datosAñadirJugador = {
  // nombre: 'juan Rivas',
  // edad: 12,
@@ -52,7 +51,7 @@ const jugadores = new jugador()
 // }
 // console.log(await jugadores.updatePlayer('669c14507f532162e6cabd84', datosActualizarJugador));
 
-console.log(await jugadores.deletePlayer('669c14507f532162e6cabd84'))
+//console.log(await jugadores.deletePlayer('669c14507f532162e6cabd84'))
 
 // CASO 4
 // const partidos = new partido(); 
@@ -100,3 +99,24 @@ console.log(await jugadores.deletePlayer('669c14507f532162e6cabd84'))
 //   resultado: { golesEquipoLocal: 5, golesEquipoVisitante: 1 }
 // };
 //console.log(await partidos.editarResultado('669beaad0fdab186cea16d90', datosAEditarResultado));
+
+
+// CASO 6
+
+// const comunicaciones = new comunicacion()
+// const datosAñadirComunicacion = {
+//     titulo : "HJAJKAA",
+//     contenido : "JAJAA",
+//     fechaPublicacion: new Date('2024-07-01'),
+//     destinatarios : ['669adc5ff75237d05bf6a9d3', '669adc5ff75237d05bf6a9d4']
+
+// }
+
+// //console.log(await comunicaciones.addNotificacion(datosAñadirComunicacion));
+
+// const datosActualizarComunicacion = {
+//   titulo : "Rivas lo mama",
+//   contenido: "Rivas lo mamax2"
+// }
+
+// console.log(await comunicaciones.updateNotificacion('66a0060b37d33b0d18d50607', datosActualizarComunicacion));
