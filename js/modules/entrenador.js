@@ -87,7 +87,7 @@ export class entrenador extends connect {
 
     async editarEntrenador(){
         let objEditar = {
-            id : new ObjectId("669adc98f75237d05bf6a996"),
+            id : new ObjectId("669adc98f75237d05bf6a9e0"),
             nombre: "Juan Rivas",
             experiencia: "45 minutos", 
             edad: 20,
