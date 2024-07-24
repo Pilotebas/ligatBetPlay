@@ -7,13 +7,13 @@ export class partido extends connect {
             return partido.instance
         }
         super();
-        this.collecction = this.db.collection("partidos");
+        this.collection = this.db.collection("partidos");
         partido.instance = this;
         return this;
     }
 
     async getAll() {
-        let activities  = await this.collecction.find({}).toArray()
+        let activities  = await this.collection.find({}).toArray()
         this.conexion.close()
         return activities
     }

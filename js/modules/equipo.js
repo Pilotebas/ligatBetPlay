@@ -7,13 +7,13 @@ export class equipo extends connect {
             return equipo.instance
         }
         super();
-        this.collecction = this.db.collection("equipos");
+        this.collection = this.db.collection("equipos");
         equipo.instance = this;
         return this;
     }
 
     async getAll() {
-        let activities  = await this.collecction.find({}).toArray()
+        let activities  = await this.collection.find({}).toArray()
         this.conexion.close()
         return activities
     }
