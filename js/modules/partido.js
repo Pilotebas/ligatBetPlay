@@ -20,7 +20,31 @@ export class partido extends connect {
         return activities
     }
 
-    // CASO 4 
+
+    /**
+     * Agrega el resultado de un partido a la base de datos.
+     *
+     * @async
+     * @function addResultado
+     * @param {string} partidoId - ID del partido al que se agregará el resultado.
+     * @param {Object} data - Datos del resultado del partido.
+     * @param {Object[]} data.goles - Array de objetos con detalles de los goles (id, jugadorGol, jugadorAsistencia, minuto).
+     * @param {Object[]} data.tarjetas - Array de objetos con detalles de las tarjetas (id, jugador, tipo, minuto).
+     * @param {Object[]} data.incidentes - Array de objetos con detalles de los incidentes (id, idJugador, tipo, minuto).
+     * @param {string} data.resultado - Resultado final del partido (e.g., "2-1").
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Resultado del partido agregado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al agregar el resultado, como:
+     *   - "Partido no encontrado": Si el ID del partido no es válido.
+     *   - "Jugador que anotó el gol con ID [ID] no pertenece a ninguno de los equipos del partido": Si un jugador involucrado en un gol no es válido.
+     *   - "Jugador que hizo la asistencia con ID [ID] no pertenece a ninguno de los equipos del partido": Si un jugador involucrado en una asistencia no es válido.
+     *   - "Jugador que recibió la tarjeta con ID [ID] no pertenece a ninguno de los equipos del partido": Si un jugador involucrado en una tarjeta no es válido.
+     *   - "Jugador involucrado en el incidente con ID [ID] no pertenece a ninguno de los equipos del partido": Si un jugador involucrado en un incidente no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
     async addResultado(partidoId, { goles, tarjetas, incidentes, resultado }) {
         try {
     
@@ -29,11 +53,11 @@ export class partido extends connect {
                 return { error: "Partido no encontrado" };
             }
     
-            // Obtener los equipos del partido
+
             const equipoLocalId = partidoExistente.equipoLocal;
             const equipoVisitanteId = partidoExistente.equipoVisitante;
     
-            // Validar y convertir IDs en goles
+
             for (const gol of goles) {
                 gol.id = new ObjectId();
                 gol.jugadorAsistencia = new ObjectId(gol.jugadorAsistencia)
@@ -55,7 +79,7 @@ export class partido extends connect {
                 }
             }
     
-            // Validar y convertir IDs en tarjetas
+
             for (const tarjeta of tarjetas) {
                 tarjeta.id = new ObjectId();
                 tarjeta.jugador = new ObjectId(tarjeta.jugador);
@@ -66,7 +90,7 @@ export class partido extends connect {
                 }
             }
     
-            // Validar y convertir IDs en incidentes
+
             for (const incidente of incidentes) {
                 incidente.id = new ObjectId();
                 incidente.idJugador = new ObjectId(incidente.idJugador);
@@ -77,7 +101,7 @@ export class partido extends connect {
                 }
             }
     
-            // Actualizar el resultado del partido
+
             const updateFields = { goles, tarjetas, incidentes, resultado };
             const result = await this.collection.updateOne(
                 { _id: new ObjectId(partidoId) },
@@ -103,6 +127,31 @@ export class partido extends connect {
             };
         }
     }
+
+
+
+    /**
+     * Edita el resultado de un partido existente en la base de datos.
+     *
+     * @async
+     * @function editarResultado
+     * @param {string} partidoId - ID del partido a editar.
+     * @param {Object} data - Datos actualizados del resultado del partido.
+     * @param {Object[]} [data.goles] - Array de objetos con detalles de los goles (id, jugadorGol, jugadorAsistencia, minuto) (opcional).
+     * @param {Object[]} [data.tarjetas] - Array de objetos con detalles de las tarjetas (id, jugador, tipo, minuto) (opcional).
+     * @param {Object[]} [data.incidentes] - Array de objetos con detalles de los incidentes (id, idJugador, tipo, minuto) (opcional).
+     * @param {string} [data.resultado] - Resultado final del partido (e.g., "2-1") (opcional).
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Resultado del partido actualizado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al editar el resultado, como:
+     *   - "Partido no encontrado": Si el ID del partido no es válido.
+     *   - Errores similares a los de `addResultado` relacionados con la validación de jugadores.
+     *   - "No se realizaron cambios en el partido": Si no se proporcionaron datos para actualizar.
+     *   - Errores relacionados con la base de datos.
+     */
     async editarResultado(partidoIdString, { goles, tarjetas, incidentes, resultado }) {
         try {
             const partidoId = new ObjectId(partidoIdString);
@@ -112,22 +161,21 @@ export class partido extends connect {
                 return { error: "Partido no encontrado" };
             }
     
-            // Obtener los equipos del partido
+
             const equipoLocalId = partidoExistente.equipoLocal;
             const equipoVisitanteId = partidoExistente.equipoVisitante;
     
-            const updateFields = {}; // Objeto para almacenar los campos a actualizar
-    
-            // Validar y actualizar goles (si se proporcionan)
+            const updateFields = {}; 
+
             if (goles) {
                 for (const gol of goles) {
-                    gol.id = new ObjectId(gol.id); // Convertir id del gol a ObjectId
+                    gol.id = new ObjectId(gol.id); 
                     gol.jugadorGol = new ObjectId(gol.jugadorGol);
                     if (gol.jugadorAsistencia) {
                         gol.jugadorAsistencia = new ObjectId(gol.jugadorAsistencia);
                     }
     
-                    // Validaciones de jugadores (igual que en addResultado)
+   
                     const jugadorGol = await this.db.collection('jugadores').findOne({ _id: gol.jugadorGol });
                     if (!jugadorGol || (jugadorGol.equipo.toString() !== equipoLocalId.toString() && jugadorGol.equipo.toString() !== equipoVisitanteId.toString())) {
                         return { error: `Jugador que anotó el gol con ID ${gol.jugadorGol} no pertenece a ninguno de los equipos del partido` };
@@ -140,40 +188,40 @@ export class partido extends connect {
                         }
                     }
                 }
-                updateFields.goles = goles; // Actualizar el array de goles completo
+                updateFields.goles = goles; 
             }
     
-            // Validar y actualizar tarjetas (si se proporcionan)
+
             if (tarjetas) {
                 for (const tarjeta of tarjetas) {
                     tarjeta.id = new ObjectId(tarjeta.id);
                     tarjeta.jugador = new ObjectId(tarjeta.jugador);
     
-                    // Validaciones de jugadores (igual que en addResultado)
+
                     const jugadorTarjeta = await this.db.collection('jugadores').findOne({ _id: tarjeta.jugador });
                     if (!jugadorTarjeta || (jugadorTarjeta.equipo.toString() !== equipoLocalId.toString() && jugadorTarjeta.equipo.toString() !== equipoVisitanteId.toString())) {
                         return { error: `Jugador que recibió la tarjeta con ID ${tarjeta.jugador} no pertenece a ninguno de los equipos del partido` };
                     }
                 }
-                updateFields.tarjetas = tarjetas; // Actualizar el array de tarjetas completo
+                updateFields.tarjetas = tarjetas; 
             }
     
-            // Validar y actualizar incidentes (si se proporcionan)
+
             if (incidentes) {
                 for (const incidente of incidentes) {
                     incidente.id = new ObjectId(incidente.id);
                     incidente.idJugador = new ObjectId(incidente.idJugador);
     
-                    // Validaciones de jugadores (igual que en addResultado)
+
                     const jugadorIncidente = await this.db.collection('jugadores').findOne({ _id: incidente.idJugador });
                     if (!jugadorIncidente || (jugadorIncidente.equipo.toString() !== equipoLocalId.toString() && jugadorIncidente.equipo.toString() !== equipoVisitanteId.toString())) {
                         return { error: `Jugador involucrado en el incidente con ID ${incidente.idJugador} no pertenece a ninguno de los equipos del partido` };
                     }
                 }
-                updateFields.incidentes = incidentes; // Actualizar el array de incidentes completo
+                updateFields.incidentes = incidentes; 
             }
     
-            // Actualizar resultado (si se proporciona)
+
             if (resultado) {
                 updateFields.resultado = resultado;
             }

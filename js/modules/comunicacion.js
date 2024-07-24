@@ -13,6 +13,26 @@ export class comunicacion extends connect {
         comunicacion.instance = this;
         return this;
     }
+        /**
+     * Agrega una nueva notificación a la base de datos.
+     *
+     * @async
+     * @function addNotificacion
+     * @param {Object} data - Datos de la notificación.
+     * @param {string} data.titulo - Título de la notificación.
+     * @param {string} data.contenido - Contenido de la notificación.
+     * @param {string[]} data.destinatarios - Array de IDs (jugadores, entrenadores, equipos o árbitros) que recibirán la notificación.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Notificación agregada correctamente").
+     * @returns {Object} [result.data] - Datos de la notificación agregada (solo en caso de éxito).
+     * @returns {string} [result.error_type] - Tipo de error (solo en caso de error).
+     * @returns {string} [result.error_message] - Mensaje de error descriptivo (solo en caso de error).
+     * 
+     * @throws {Error} - Lanza un error si ocurre un problema al agregar la notificación. Posibles errores incluyen:
+     *   - "Destinatario con ID [ID] no encontrado (ni jugador ni equipo)": Si un destinatario no existe.
+     *   - Errores relacionados con la base de datos (conexión, validación, etc.).
+     */
 
     async addNotificacion({ titulo, contenido, destinatarios }) {
         try {
@@ -50,6 +70,29 @@ export class comunicacion extends connect {
             };
         }
     }
+
+        /**
+     * Actualiza una notificación existente en la base de datos.
+     *
+     * @async
+     * @function updateNotificacion
+     * @param {string} notificacionId - ID de la notificación a actualizar.
+     * @param {Object} data - Datos a actualizar.
+     * @param {string} [data.titulo] - Nuevo título (opcional).
+     * @param {string} [data.contenido] - Nuevo contenido (opcional).
+     * @param {string[]} [data.destinatarios] - Nuevos destinatarios (opcional).
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Notificación actualizada correctamente").
+     * @returns {Object} [result.data] - Campos actualizados de la notificación (solo en caso de éxito).
+     * @returns {string} [result.error_type] - Tipo de error (solo en caso de error).
+     * @returns {string} [result.error_message] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al actualizar la notificación. Posibles errores incluyen:
+     *   - "Destinatario con ID [ID] no encontrado (ni jugador ni equipo)": Si un destinatario no existe.
+     *   - "Notificación no encontrada": Si el ID de notificación no es válido.
+     *   - Errores relacionados con la base de datos (conexión, validación, etc.).
+     */
 
     async updateNotificacion(notificacionId, { titulo, contenido, destinatarios }) {
         try {
