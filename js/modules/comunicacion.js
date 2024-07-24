@@ -1,4 +1,5 @@
 import { connect } from "../../helpers/db/connect.js";
+import { ObjectId } from "mongodb";
 
 export class comunicacion extends connect {
     static instance

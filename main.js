@@ -4,7 +4,7 @@ import {equipo} from "./js/modules/equipo.js";
 import { jugador } from "./js/modules/jugador.js";
 import { entrenador } from "./js/modules/entrenador.js";
 import { patrocinador } from "./js/modules/patrocinador.js";
-
+import { ObjectId } from "mongodb";
 //let doy = new patrocinador()
 //Caso 3
 //console.log(await doy.objetoc3());
@@ -45,25 +45,25 @@ import { patrocinador } from "./js/modules/patrocinador.js";
 // console.log(await equipos.deleteTeam(''));
 
 // CASO 2
-//const jugadores = new jugador()
-//const datosAñadirJugador = {
- // nombre: 'juan Rivas',
- // edad: 12,
-  // posicion: "portero",
-  // nacionalidad: "mexicano",
-  // numeroCamiseta: 100,
-  // equipo: new ObjectId('669bd7b50fdab186cea16d78'),  // Lista vacía para partidos
-  // lesiones: [],  // Lista vacía para entrenamientos
-  // rendimientos: []
-//}
-//console.log(await jugadores.addPlayer(datosAñadirJugador));}
+// const jugadores = new jugador()
+// const datosAñadirJugador = {
+//  nombre: 'juan Rivas',
+//  edad: 12,
+//   posicion: "portero",
+//   nacionalidad: "mexicano",
+//   numeroCamiseta: 1,
+//   equipo: new ObjectId('669bd7b50fdab186cea16d78'),  // Lista vacía para partidos
+//   lesiones: [],  // Lista vacía para entrenamientos
+//   rendimientos: []
+// }
+// console.log(await jugadores.addPlayer(datosAñadirJugador));
 
 // const datosActualizarJugador = {
 //  nombre: 'juan Rivas',
 //  edad: 12,
 //   posicion: "portero",
 //   nacionalidad: "mexicano",
-//   numeroCamiseta: 90,
+//   numeroCamiseta: 1000,
 //   equipo: new ObjectId('669bd7b50fdab186cea16d78'),  // Lista vacía para partidos
 //   lesiones: [],  // Lista vacía para entrenamientos
 //   rendimientos: []
