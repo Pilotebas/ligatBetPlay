@@ -213,6 +213,59 @@ El sistema de gestión propuesto debe abordar las siguientes necesidades:
 4. El sistema guarda la programación del partido.
 5. El administrador puede editar o eliminar partidos programados.
 
+```javascript
+    //Consulta para devolver datos que necesito e iterarlo
+    let res = await this.collection.aggregate([
+      {
+        $project: {
+          _id: 0,
+          hora: 1,
+          fecha: 1,
+          estadio: 1,
+          equipoLocal: 1,
+          equipoVisitante: 1,
+          arbitro: 1
+        }
+      }
+    ]).toArray()
+
+    //Consulta para registrar un partido
+    let res = await this.collection.insertOne({
+        equipoLocal: equipoLocal,
+        equipoVisitante: equipoVisitante,
+        fecha: fecha,
+        hora: hora,
+        estadio: estadio,
+        goles: [],
+        tarjetas: [],
+        incidentes: [],
+        resultado: {
+            golesEquipoLocal: 0,
+            golesEquipoVisitante: 0
+        },
+        arbitro: arbitro
+    })
+
+    //Consulta para hacer un update
+    res = await this.collection.updateOne(
+        {_id : id},
+        {
+          $set: {
+            equipoLocal: equipoLocal,
+            equipoVisitante: equipoVisitante,
+            fecha: fecha,
+            hora: hora,
+            estadio: estadio,
+            goles: [],
+            tarjetas: [],
+            incidentes: [],
+            resultado: { "golesEquipoLocal": 0, "golesEquipoVisitante": 0 },
+            arbitro: arbitro
+          }
+        }
+    )
+```
+
 #### 4. Registro de Resultados - 3 SEBAS
 
 **Actor:** Árbitro, Administrador de la Liga
@@ -263,6 +316,45 @@ El sistema de gestión propuesto debe abordar las siguientes necesidades:
 3. El actor ingresa la información del entrenador (nombre, experiencia, etc.).
 4. El sistema guarda la información del entrenador.
 5. El actor puede editar o eliminar entrenadores existentes.
+
+```javascript
+    //Consulta para iterarla
+    let res = await this.collection.aggregate([
+      {
+        $project: {
+          _id: 0,
+          nombre: 1,
+          experiencia: 1,
+          edad: 1,
+          identificacion: 1,
+        }
+      }
+    ]).toArray()
+
+    //Consulta para registrar
+    let res = await this.collection.insertOne({
+        nombre: nombre,
+        experiencia: experiencia, 
+        edad: edad,
+        identificacion: identificacion
+    })
+
+    //Consulta para eliminar
+    await this.collection.findOne({_id : id})
+
+    //Consulta para actualizar
+    let res = await this.collection.updateOne(
+      {_id : id},
+      {
+        $set: {
+          nombre: nombre,
+          experiencia: experiencia,
+          edad: edad,
+          identificacion: identificacion
+        }
+      }
+    )
+```
 
 #### 8. Gestión de Árbitros - 3 SEBAS
 
@@ -315,6 +407,44 @@ El sistema de gestión propuesto debe abordar las siguientes necesidades:
 3. El administrador ingresa la información del patrocinio (empresa, monto, duración, etc.).
 4. El sistema guarda la información del patrocinio.
 5. El administrador puede editar o eliminar patrocinios existentes.
+
+```javascript
+    //Consulta para iterarla
+    let res = await this.collection.aggregate([
+        {
+          $project: {
+            _id: 0,
+            nombre: 1
+          }
+        }
+    ]).toArray()
+
+    //Consulta para registrar
+    let res = await this.collection.insertOne({
+        nombre: nombre,
+        tipo: tipo,
+        monto: monto,
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin
+    })
+
+    //Consulta para eliminar
+    await this.collection.findOne({_id : id})
+
+    //Consulta para actualizar
+    let res = await this.collection.updateOne(
+      {_id : id},
+      {
+        $set: {
+          nombre: nombre,
+          tipo: tipo,
+          monto: monto,
+          fechaInicio: fechaInicio,
+          fechaFin: fechaFin
+        }
+      }
+    )
+```
 
 #### 12. Generación de Informes - 8 RIVAS
 

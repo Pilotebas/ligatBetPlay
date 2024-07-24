@@ -21,8 +21,8 @@ export class entrenador extends connect {
 
     objetoc7(){
         const obj = {
-            nombre: "Johan Lo Mama",
-            experiencia: "13 años en chupar",
+            nombre: "Johan Diaz",
+            experiencia: "3 años",
             edad: 18,
             identificacion: 1245678
         }
