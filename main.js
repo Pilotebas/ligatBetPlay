@@ -19,4 +19,4 @@ let doy = new patrocinador()
 //Caso 11
 //console.log(await doy.objetoc11()); 
 //console.log(await doy.eliminarPatrocinador());
-console.log(await doy.editarPatrocinador());
+//console.log(await doy.editarPatrocinador());

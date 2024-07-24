@@ -19,6 +19,12 @@ export class patrocinador extends connect {
         return activities
     }
 
+    /**
+    * Crea un objeto con los detalles de un patrocinador y realiza una validación del mismo.
+    * 
+    * @returns {Promise<Object>} - El resultado de la validación del patrocinador.
+    */
+
     objetoc11(){
         const obj = {
             nombre: "Hoyy",
@@ -30,6 +36,17 @@ export class patrocinador extends connect {
         let {nombre, tipo, monto, fechaInicio, fechaFin} = obj
         return (this.validacionPatrocinador(nombre, tipo, monto, fechaInicio, fechaFin))
     }
+
+    /**
+    * Valida los detalles de un patrocinador y verifica si ya existe uno con el mismo nombre.
+    * 
+    * @param {string} nombre - El nombre del patrocinador.
+    * @param {string} tipo - El tipo de patrocinador (e.g., "principal", "secundario").
+    * @param {number} monto - El monto del patrocinio.
+    * @param {Date} fechaInicio - La fecha de inicio del patrocinio.
+    * @param {Date} fechaFin - La fecha de finalización del patrocinio.
+    * @returns {Promise<Object>} - Un objeto con un mensaje de error si ya existe un patrocinador con el mismo nombre, o el resultado del registro del patrocinador si la validación es exitosa.
+    */
 
     async validacionPatrocinador(nombre, tipo, monto, fechaInicio, fechaFin){
 
@@ -48,6 +65,17 @@ export class patrocinador extends connect {
         }
         return(this.registrarPatrocinador(nombre, tipo, monto, fechaInicio, fechaFin))
     }
+
+    /**
+    * Registra un nuevo patrocinador en la colección.
+    * 
+    * @param {string} nombre - El nombre del patrocinador.
+    * @param {string} tipo - El tipo de patrocinador (e.g., "principal", "secundario").
+    * @param {number} monto - El monto del patrocinio.
+    * @param {Date} fechaInicio - La fecha de inicio del patrocinio.
+    * @param {Date} fechaFin - La fecha de finalización del patrocinio.
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el patrocinador se registró correctamente.
+    */
 
     async registrarPatrocinador(nombre, tipo, monto, fechaInicio, fechaFin){
         let res = await this.collection.insertOne({
@@ -80,6 +108,12 @@ export class patrocinador extends connect {
             return {descripcion: "Patrocinador eliminado con exito"}
         }
     }
+
+    /**
+    * Elimina un patrocinador de la colección basado en su ID.
+    * 
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el patrocinador se eliminó correctamente, o un mensaje de error si el patrocinador no existe.
+    */
 
     async editarPatrocinador(){
         let objEditar = {

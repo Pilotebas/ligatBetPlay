@@ -18,6 +18,12 @@ export class partido extends connect {
         return activities
     }
 
+    /**
+    * Crea un objeto con los detalles de un partido y realiza una validación del mismo.
+    * 
+    * @returns {boolean} - El resultado de la validación del partido.
+    */
+
     objetoc3(){
         const obj = {
             equipoLocal: new ObjectId("669bd7b50fdab186cea16d79"),
@@ -30,6 +36,18 @@ export class partido extends connect {
         let {equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro} = obj
         return (this.validacionPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro))
     }
+
+    /**
+    * Valida los detalles de un partido y verifica si los equipos, el estadio y el árbitro están disponibles en la fecha y hora especificadas.
+    * 
+    * @param {ObjectId} equipoLocal - El ID del equipo local.
+    * @param {ObjectId} equipoVisitante - El ID del equipo visitante.
+    * @param {Date} fecha - La fecha del partido.
+    * @param {string} hora - La hora del partido.
+    * @param {ObjectId} estadio - El ID del estadio.
+    * @param {ObjectId} arbitro - El ID del árbitro.
+    * @returns {Promise<Object>} - Un objeto con un mensaje de error si la validación falla, o el resultado de la programación del partido si la validación es exitosa.
+    */
 
     async validacionPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro){
 
@@ -90,6 +108,20 @@ export class partido extends connect {
         return(this.programarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro))
     }
 
+
+
+    /**
+    * Programa un partido insertando los detalles en la colección correspondiente.
+    * 
+    * @param {ObjectId} equipoLocal - El ID del equipo local.
+    * @param {ObjectId} equipoVisitante - El ID del equipo visitante.
+    * @param {Date} fecha - La fecha del partido.
+    * @param {string} hora - La hora del partido.
+    * @param {ObjectId} estadio - El ID del estadio.
+    * @param {ObjectId} arbitro - El ID del árbitro.
+    * @returns {Promise<Object>} - El resultado de la inserción del partido en la colección.
+    */
+
     async programarPartido(equipoLocal, equipoVisitante, fecha, hora, estadio, arbitro){
         let res = await this.collection.insertOne({
             equipoLocal: equipoLocal,
@@ -109,6 +141,12 @@ export class partido extends connect {
         return res
     }
 
+    /**
+    * Elimina un partido de la colección basado en su ID.
+    * 
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el partido se eliminó correctamente, o un mensaje de error si el partido no existe.
+    */
+
     async eliminarPartido(){
         const objEliminar = {
             id: new ObjectId("669ecb5f5e2119f338879a38")
@@ -127,6 +165,12 @@ export class partido extends connect {
             return {descripcion: "Objeto eliminado con exito"}
         }
     }
+
+    /**
+    * Edita los detalles de un partido existente en la colección.
+    * 
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el partido se actualizó correctamente, o un mensaje de error si el partido no existe o hay conflictos con la actualización.
+    */
 
     async editarPartido(){
         const objEditar = {
