@@ -18,7 +18,31 @@ export class jugador extends connect {
         return activities
     }
     
-    // CASO 2
+    /**
+     * Agrega un nuevo jugador a la base de datos.
+     *
+     * @async
+     * @function addPlayer
+     * @param {Object} data - Datos del jugador.
+     * @param {string} data.nombre - Nombre del jugador.
+     * @param {number} data.edad - Edad del jugador.
+     * @param {string} data.posicion - Posición del jugador.
+     * @param {string} data.nacionalidad - Nacionalidad del jugador.
+     * @param {number} data.numeroCamiseta - Número de camiseta del jugador.
+     * @param {string} data.equipo - ID del equipo al que pertenece el jugador.
+     * @param {Object[]} data.lesiones - Array de objetos con detalles de lesiones del jugador.
+     * @param {Object[]} data.rendimientos - Array de objetos con detalles del rendimiento del jugador.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Jugador agregado correctamente").
+     * @returns {Object} [result.data] - Datos del jugador agregado (solo en caso de éxito).
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al agregar el jugador, como:
+     *   - "Equipo no existe": Si el ID del equipo no es válido.
+     *   - "Ya existe un jugador con ese número de camiseta en el equipo": Si el número de camiseta ya está asignado en el equipo.
+     *   - Errores relacionados con la base de datos.
+     */
     async addPlayer({nombre,edad,posicion,nacionalidad,numeroCamiseta,equipo,lesiones,rendimientos}) { 
         try {
             this.conexion.connect();
@@ -27,7 +51,6 @@ export class jugador extends connect {
                 return { error : "Equipo no existe"}
             }
 
-            // Validación de número de camiseta
             const jugadorExistente = await this.db.collection('jugadores').findOne({
                 equipo: equipo,
                 numeroCamiseta: numeroCamiseta
@@ -64,7 +87,33 @@ export class jugador extends connect {
             }
 
     } 
-    async updatePlayer(teamId, { nombre, edad, posicion, nacionalidad, numeroCamiseta, equipo }) {
+
+
+
+    /**
+     * Actualiza un jugador existente en la base de datos.
+     *
+     * @async
+     * @function updatePlayer
+     * @param {string} playerId - ID del jugador a actualizar.
+     * @param {Object} data - Datos a actualizar.
+     * @param {string} [data.nombre] - Nuevo nombre del jugador (opcional).
+     * @param {number} [data.edad] - Nueva edad del jugador (opcional).
+     * @param {string} [data.posicion] - Nueva posición del jugador (opcional).
+     * @param {string} [data.nacionalidad] - Nueva nacionalidad del jugador (opcional).
+     * @param {number} [data.numeroCamiseta] - Nuevo número de camiseta (opcional).
+     * @param {string} [data.equipo] - Nuevo ID del equipo (opcional).
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Jugador actualizado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al actualizar el jugador, como:
+     *   - "Equipo no existe": Si el nuevo ID del equipo no es válido.
+     *   - "Jugador no encontrado": Si el ID del jugador no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
+    async updatePlayer(playerId, { nombre, edad, posicion, nacionalidad, numeroCamiseta, equipo }) {
         try {
             this.conexion.connect();
             const arrayFilters = [];
@@ -85,7 +134,7 @@ export class jugador extends connect {
             }
 
             const result = await this.collection.findOneAndUpdate(
-                { _id: new ObjectId(teamId) },
+                { _id: new ObjectId(playerId) },
                 { $set: updateFields },
                 { arrayFilters, returnDocument: "after" }
             );
@@ -109,10 +158,28 @@ export class jugador extends connect {
         }
 
     }
-    async deletePlayer(teamId){
+
+
+
+    /**
+     * Elimina un jugador de la base de datos.
+     *
+     * @async
+     * @function deletePlayer
+     * @param {string} playerId - ID del jugador a eliminar.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Jugador eliminado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al eliminar el jugador, como:
+     *   - "Jugador no encontrado": Si el ID del jugador no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
+    async deletePlayer(playerId){
         try {
 
-            const result = this.collection.findOneAndDelete({_id: new ObjectId(teamId)})
+            const result = this.collection.findOneAndDelete({_id: new ObjectId(playerId)})
 
             if (result.modifiedCount === 0) {
                 return { error: "jugador no encontrado" };

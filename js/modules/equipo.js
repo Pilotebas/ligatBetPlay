@@ -17,6 +17,34 @@ export class equipo extends connect {
         this.conexion.close()
         return activities
     }
+
+        /**
+     * Agrega un nuevo equipo a la base de datos.
+     *
+     * @async
+     * @function addTeam
+     * @param {Object} data - Datos del equipo.
+     * @param {string} data.nombre - Nombre del equipo.
+     * @param {string} data.ciudad - Ciudad del equipo.
+     * @param {string} data.estadio - ID del estadio del equipo.
+     * @param {string} data.entrenador - ID del entrenador del equipo.
+     * @param {string[]} data.jugadores - Array de IDs de los jugadores del equipo.
+     * @param {string[]} data.partidos - Array de IDs de los partidos del equipo.
+     * @param {Object} data.entrenamientos - Objeto con detalles de los entrenamientos del equipo.
+     * @param {string[]} data.patrocinadores - Array de IDs de los patrocinadores del equipo.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Equipo agregado correctamente").
+     * @returns {Object} [result.data] - Datos del equipo agregado (solo en caso de éxito).
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al agregar el equipo, como:
+     *   - "Estadio no existe": Si el ID del estadio no es válido.
+     *   - "Entrenador no existe": Si el ID del entrenador no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
+
+
     async addTeam({nombre,ciudad,estadio,entrenador,jugadores,partidos,entrenamientos,patrocinadores}) { 
         try {
             this.conexion.connect();
@@ -59,6 +87,35 @@ export class equipo extends connect {
             }
 
     } 
+
+
+    /**
+     * Actualiza un equipo existente en la base de datos.
+     *
+     * @async
+     * @function updateTeam
+     * @param {string} teamId - ID del equipo a actualizar.
+     * @param {Object} data - Datos a actualizar.
+     * @param {string} [data.nombre] - Nuevo nombre del equipo (opcional).
+     * @param {string} [data.ciudad] - Nueva ciudad del equipo (opcional).
+     * @param {string} [data.estadio] - Nuevo ID del estadio (opcional).
+     * @param {string} [data.entrenador] - Nuevo ID del entrenador (opcional).
+     * @param {string[]} [data.jugadores] - Nuevos IDs de jugadores (opcional).
+     * @param {string[]} [data.partidos] - Nuevos IDs de partidos (opcional).
+     * @param {Object} [data.entrenamientos] - Nuevos datos de entrenamientos (opcional).
+     * @param {string[]} [data.patrocinadores] - Nuevos IDs de patrocinadores (opcional).
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Equipo actualizado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al actualizar el equipo, como:
+     *   - "Estadio no existe": Si el nuevo ID del estadio no es válido.
+     *   - "Entrenador no existe": Si el nuevo ID del entrenador no es válido.
+     *   - "Equipo no encontrado": Si el ID del equipo no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
+
     async updateTeam(teamId, { nombre, ciudad, estadio, entrenador, jugadores, partidos, entrenamientos, patrocinadores }) {
         try {
             this.conexion.connect();
@@ -126,10 +183,27 @@ export class equipo extends connect {
             error_message: error.message || 'Ha ocurrido un error'
         };
         } finally{
-            this.conexion.close
+            this.conexion.close()
         }
 
     }
+
+
+        /**
+     * Elimina un equipo de la base de datos.
+     *
+     * @async
+     * @function deleteTeam
+     * @param {string} teamId - ID del equipo a eliminar.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @returns {boolean} result.success - Indica si la operación fue exitosa (`true`) o no (`false`).
+     * @returns {string} [result.message] - Mensaje de éxito ("Equipo eliminado correctamente").
+     * @returns {string} [result.error] - Mensaje de error descriptivo (solo en caso de error).
+     *
+     * @throws {Error} - Lanza un error si ocurre un problema al eliminar el equipo, como:
+     *   - "Equipo no encontrado": Si el ID del equipo no es válido.
+     *   - Errores relacionados con la base de datos.
+     */
     async deleteTeam(teamId){
         try {
             if(!teamExist) return { error : "Equipo no existe"} 

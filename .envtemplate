@@ -1,6 +1,6 @@
 user = 
-port = 
+port = 59591
 pass = 
-host = 
-cluster = 
-dbName = 
+host = mongodb://
+cluster = roundhouse.proxy.rlwy.net
+dbName = BetPlay
