@@ -19,6 +19,12 @@ export class entrenador extends connect {
         return activities
     }
 
+    /**
+    * Crea un objeto con los detalles de un entrenador y realiza una validación del mismo.
+    * 
+    * @returns {boolean} - El resultado de la validación del entrenador.
+    */
+
     objetoc7(){
         const obj = {
             nombre: "Johan Lo Mama",
@@ -29,6 +35,16 @@ export class entrenador extends connect {
         let {nombre, experiencia, edad, identificacion} = obj
         return (this.validacionEntrenador(nombre, experiencia, edad, identificacion))
     }
+
+    /**
+    * Valida los detalles de un entrenador y verifica si ya está registrado.
+    * 
+    * @param {string} nombre - El nombre del entrenador.
+    * @param {string} experiencia - La experiencia del entrenador.
+    * @param {number} edad - La edad del entrenador.
+    * @param {number} identificacion - La identificación del entrenador.
+    * @returns {Promise<Object>} - Un objeto con un mensaje de error si el entrenador ya está registrado, o el resultado del registro del entrenador si la validación es exitosa.
+    */
 
     async validacionEntrenador(nombre, experiencia, edad, identificacion){
 
@@ -54,6 +70,16 @@ export class entrenador extends connect {
         return(this.registrarEntrenador(nombre, experiencia, edad, identificacion))
     }
 
+    /**
+    * Registra un nuevo entrenador en la colección.
+    * 
+    * @param {string} nombre - El nombre del entrenador.
+    * @param {string} experiencia - La experiencia del entrenador.
+    * @param {number} edad - La edad del entrenador.
+    * @param {number} identificacion - La identificación del entrenador.
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el entrenador se registró correctamente.
+    */
+
     async registrarEntrenador(nombre, experiencia, edad, identificacion){
         let res = await this.collection.insertOne({
             nombre: nombre,
@@ -65,6 +91,12 @@ export class entrenador extends connect {
             return {descripcion: "Objeto agregado con exito"}
         }
     }
+
+    /**
+    * Elimina un entrenador de la colección basado en su ID.
+    * 
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el entrenador se eliminó correctamente, o un mensaje de error si el entrenador no existe.
+    */
 
     async eliminarEntrenador(){
         const objEliminar = {
@@ -84,6 +116,12 @@ export class entrenador extends connect {
             return {descripcion: "Entrenador eliminado con exito"}
         }
     }
+
+    /**
+    * Edita los detalles de un entrenador existente en la colección.
+    * 
+    * @returns {Promise<Object>} - Un objeto con un mensaje de éxito si el entrenador se actualizó correctamente, o un mensaje de error si el entrenador no existe o si ya existe un entrenador con la misma identificación.
+    */
 
     async editarEntrenador(){
         let objEditar = {
